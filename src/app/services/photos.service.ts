@@ -21,10 +21,10 @@ export class PhotosService {
     }
 
     fetchPhotos(direction: Direction, limits: Limits) {
-        this.currentPage = direction === Direction.down ?
+        this.currentPage = Math.floor(direction === Direction.down ?
             limits.end ? (limits.end + 1)/config.pageLimit + 1: 1 :
-            limits.start/config.pageLimit;
- 
+            limits.start/config.pageLimit);
+
         if (this.currentPage <= 0) {
             return of([]);
         }
