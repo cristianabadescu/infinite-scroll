@@ -36,10 +36,7 @@ describe('PhotosService', () => {
     });
     
     it('should have a method fetchPhotos that get the images from server', waitForAsync(() => {
-        service.fetchPhotos(Direction.down, {
-            "start": 0,
-            "end": 0
-        }).subscribe((data) => {
+        service.fetchPhotos(Direction.down).subscribe((data) => {
             expect(data).toEqual(getPhotosListMock);
         });
         
@@ -50,10 +47,7 @@ describe('PhotosService', () => {
     }));
     
     it('should return empty array if current page is less or egual with 0', () => {
-        service.fetchPhotos(Direction.up, {
-            "start": 0,
-            "end": 0
-        }).subscribe((data) => {
+        service.fetchPhotos(Direction.up).subscribe((data) => {
             expect(data).toEqual([]);
         });
     })

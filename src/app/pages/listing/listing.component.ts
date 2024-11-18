@@ -57,12 +57,7 @@ export class ListingComponent implements OnInit {
         this.isLoading = true;
         this.snackBarRef.open('Loading more images. Hold on 😊');
 
-        const limits = {
-            start: Number(this.images[0]?.id) | 0,
-            end: Number(this.images[this.images.length - 1]?.id) | 0
-        }
-
-        this.photosService.fetchPhotos(direction, limits).subscribe((images) => {
+        this.photosService.fetchPhotos(direction).subscribe((images) => {
             if (this.images.length < config.pageLimit * 2) {
                 this.images.push(...images);
             }

@@ -12,7 +12,11 @@ export class PhotosService {
     private currentPage: number = 1;
     private _favoritesList$ = new BehaviorSubject<Photo[]>([]);
     favoritesList$ = this._favoritesList$.asObservable(); 
-    limit = config.pageLimit;
+    pagelimit = config.pageLimit;
+    limits: Limits = {
+        start: 0,
+        end: 0
+    }
     
     constructor(
         private http: HttpClient
@@ -20,17 +24,45 @@ export class PhotosService {
         this.getFavoritesFromSessionStorage()
     }
 
-    fetchPhotos(direction: Direction, limits: Limits) {
-        this.currentPage = Math.floor(direction === Direction.down ?
-            limits.end ? (limits.end + 1)/config.pageLimit + 1: 1 :
-            limits.start/config.pageLimit);
+    updateLimits(direction: Direction) {
+        if (direction === Direction.down) {
+            const startLimit = this.limits.end - this.limits.start === 18 ?
+                this.limits.start + 9 :
+                this.limits.start
+
+            this.limits = {
+                start: startLimit,
+                end: this.limits.end + 9
+            }
+        }
+
+        if (direction === Direction.up) {
+            const endLimit = this.limits.end - this.limits.start === 18 ?
+                this.limits.end - 9 :
+                this.limits.end
+            this.limits = {
+                start: this.limits.start - 9 > 0 ? this.limits.start - 9 : 0,
+                end: endLimit
+            }
+        }
+    }
+
+    calculateCurrentPage(direction: Direction) {
+        this.currentPage = direction === Direction.down ?
+            this.limits.end/config.pageLimit + 1:
+            this.limits.start/config.pageLimit;
+    }
+
+    fetchPhotos(direction: Direction) {
+        this.calculateCurrentPage(direction)
+        this.updateLimits(direction)
 
         if (this.currentPage <= 0) {
             return of([]);
         }
 
         return this.http.get<Photo[]>(
-            `${this.apiUrl}list?page=${this.currentPage}&limit=${this.limit}`,
+            `${this.apiUrl}list?page=${this.currentPage}&limit=${this.pagelimit}`,
         ).pipe(
             delay(250)
         );
