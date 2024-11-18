@@ -1,0 +1,12 @@
+<div class="image-container" *ngIf="image">
+    <img
+        class="favorite-image"
+        [src]="image.download_url"
+        [alt]="image.author + ' photo'">
+
+    <button mat-stroked-button
+        data-test="remove-button"
+        (click)="removeFromFavorites()">
+        Remove from favorites
+    </button>
+</div>

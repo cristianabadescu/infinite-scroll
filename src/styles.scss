@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root {
+    --gap: 16px;
+    --grid-image-height: 300px;
+}
+
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: var(--grid-image-height);
+    gap: var(--gap);
+    .img-container {
+        cursor: pointer;
+        img {
+            width: 100%;
+            height: var(--grid-image-height);
+            object-fit: cover;
+        }
+    }
+}

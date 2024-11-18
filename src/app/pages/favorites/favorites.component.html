@@ -1,0 +1,8 @@
+<div class="images-grid">
+    <a *ngFor="let image of favoritesList$ | async" class="img-container"
+    [routerLink]="'/favorites/' + image.id">
+        <img
+            [src]="image.download_url"
+            [alt]="image.author + ' photo'">
+    </a>
+</div>

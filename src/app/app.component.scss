@@ -1,0 +1,28 @@
+.header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    box-shadow: var(--mat-app-elevation-shadow-level-5);
+    background-color: wheat;
+    z-index: 1;
+}
+
+.navigation-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap);
+    padding: var(--gap);
+    margin: 0;
+    list-style: none;
+    .navigation-link {
+        &.active {
+            box-shadow: var(--mat-app-elevation-shadow-level-5);
+        }
+    }
+}
+
+.main-content {
+    margin: 90px var(--gap) var(--gap);
+}
